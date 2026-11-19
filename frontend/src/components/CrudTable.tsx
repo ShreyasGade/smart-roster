@@ -136,12 +136,12 @@ export default function CrudTable({ table, rows, columns, help }: Props) {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-3">
-        <button className="btn" onClick={() => setEditing(blank())}>Add row</button>
+        <button className="btn whitespace-nowrap shrink-0" onClick={() => setEditing(blank())}>Add row</button>
         {help && <p className="hint">{help}</p>}
       </div>
       {error && <p className="text-sm text-danger">Couldn't save: {error}</p>}
       <div className="overflow-x-auto">
-        <table className="text-sm w-full">
+        <table className="text-sm w-full whitespace-nowrap">
           <thead>
             <tr className="text-left border-b border-line text-muted">
               {columns.map((c) => <th key={c.key} className="px-2 py-1.5 font-semibold">{c.label}</th>)}

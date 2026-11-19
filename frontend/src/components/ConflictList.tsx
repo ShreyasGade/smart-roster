@@ -39,7 +39,8 @@ export default function ConflictList({ conflicts, onApplied, readOnly }: { confl
   return (
     <div>
       {msg && <p className="mb-3 px-3 py-2 text-sm border border-ok text-ok">{msg}</p>}
-      <ul className="border-t border-line">
+      {/* one column normally, two side by side on very wide screens */}
+      <ul className="border-t border-line grid 2xl:grid-cols-2 2xl:gap-x-6 items-start">
         {conflicts.map((c) => {
           const sev = SEVERITY[c.severity];
           return (

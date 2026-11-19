@@ -44,7 +44,8 @@ export default function Dashboard() {
         <Figure label="Brands" value={lookups.brands.length} note={`running ${lookups.bps.length} processes`} last />
       </dl>
 
-      <div className="grid lg:grid-cols-[3fr_2fr] gap-5 items-start">
+      {/* 1 column on small screens, 2 on laptops, 3 on wide monitors */}
+      <div className="grid lg:grid-cols-[3fr_2fr] 2xl:grid-cols-[2fr_1fr_1fr] gap-5 items-start">
         <section className="panel">
           <div className="panel-head">
             <h2>On shift</h2>
@@ -86,7 +87,8 @@ export default function Dashboard() {
           </div>
         </section>
 
-        <div className="space-y-5">
+        {/* on wide screens these two panels become their own columns */}
+        <div className="space-y-5 2xl:space-y-0 2xl:contents">
           <section className="panel">
             <div className="panel-head"><h2>Brands with gaps this month</h2><Link to="/conflicts" className="text-sm text-accent underline">Fix them</Link></div>
             <div className="panel-body">

@@ -16,7 +16,7 @@ export default function ConflictsPage() {
     (!search || c.message.toLowerCase().includes(search.toLowerCase())));
 
   return (
-    <div className="space-y-5 max-w-5xl">
+    <div className="space-y-5">
       <div className="border-b border-line pb-4">
         <h1>Conflicts</h1>
         <p className="mt-1 max-w-3xl">

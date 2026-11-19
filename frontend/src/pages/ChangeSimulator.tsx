@@ -48,10 +48,10 @@ export default function ChangeSimulator() {
   }
 
   return (
-    <div className="space-y-5 max-w-5xl">
+    <div className="space-y-5">
       <div className="border-b border-line pb-4">
         <h1>What if someone can't come in?</h1>
-        <p className="mt-1">Pick a person and the days they'll be away. You'll see every brand that loses cover and how to fill it. Nothing is saved until you apply it.</p>
+        <p className="mt-1 max-w-3xl">Pick a person and the days they'll be away. You'll see every brand that loses cover and how to fill it. Nothing is saved until you apply it.</p>
       </div>
       <div className="panel panel-body flex flex-wrap gap-3 items-end">
         <label className="text-sm text-muted">Person<br />

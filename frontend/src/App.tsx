@@ -25,11 +25,11 @@ export default function App() {
             <span className="w-3 h-3 bg-accent inline-block self-center" />
             <span className="text-lg font-semibold" style={{ fontStretch: "118%" }}>Smart Roster</span>
           </div>
-          <nav className="flex gap-1 overflow-x-auto">
+          <nav className="flex flex-wrap sm:flex-nowrap gap-x-0 sm:gap-x-1 sm:overflow-x-auto -mx-2 sm:mx-0">
             {LINKS.map((l) => (
               <NavLink key={l.to} to={l.to} end
                 className={({ isActive }) =>
-                  `px-3 pb-2.5 pt-1 text-sm whitespace-nowrap border-b-[3px] ${isActive ? "border-accent font-semibold" : "border-transparent text-muted hover:text-ink"}`}>
+                  `px-2 sm:px-3 pb-2.5 pt-1 text-sm whitespace-nowrap border-b-[3px] ${isActive ? "border-accent font-semibold" : "border-transparent text-muted hover:text-ink"}`}>
                 {l.label}
                 {l.to === "/conflicts" && roster && roster.summary.hard > 0 && (
                   <span className="ml-1.5 px-1.5 text-xs bg-danger text-danger-ink">{roster.summary.hard}</span>
@@ -46,7 +46,7 @@ export default function App() {
           </div>
         </div>
       </header>
-      <main className="flex-1 px-4 md:px-6 py-5 max-w-[1600px] w-full">
+      <main className="flex-1 px-4 md:px-6 py-5 w-full min-w-0">
         {error && <p className="mb-4 px-3 py-2 bg-dangerSoft text-dangerSoft-ink border border-danger">Can't reach the server: {error}</p>}
         <Routes>
           <Route path="/" element={<Dashboard />} />
