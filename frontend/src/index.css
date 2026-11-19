@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn { @apply px-3 py-1.5 rounded text-sm font-medium bg-slate-800 text-white hover:bg-slate-700 disabled:opacity-40; }
+.btn-light { @apply px-3 py-1.5 rounded text-sm font-medium bg-white border border-slate-300 hover:bg-slate-100; }
+.input { @apply border border-slate-300 rounded px-2 py-1 text-sm bg-white; }
+.card { @apply bg-white rounded-lg border border-slate-200 p-4; }
