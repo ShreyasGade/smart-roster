@@ -3,6 +3,18 @@
 A browser-based tool that helps an operations manager **plan, generate, validate and manage monthly rosters**
 for 34 employees across 22 brands, 5 processes and 5 pods.
 
+**Author:** Shreyas Gade · [LinkedIn](https://www.linkedin.com/in/shreyas-gade-756379269)
+
+## Screenshots
+
+| | |
+|---|---|
+| **Overview** (Daylight, Signal blue): coverage, must-fix count, who is on shift on any day | ![Overview](docs/screenshots/overview.png) |
+| **Roster** (Night shift, Pine): every person and day, grouped by pod, with gaps outlined | ![Roster](docs/screenshots/roster.png) |
+| **Conflicts** (Control room, Railway yellow): plain-English problems with ranked, pre-tested fixes | ![Conflicts](docs/screenshots/conflicts.png) |
+| **What if** (Drafting, Plum): one person's absence, the gaps it causes, and how to fill them | ![What if](docs/screenshots/what-if.png) |
+| **Setup** (Daylight, Brick): people, brands, rules and assignments, editable without code changes | ![Setup](docs/screenshots/setup.png) |
+
 - **Backend:** Python 3.12, FastAPI, SQLAlchemy, SQLite. The scheduler is pure Python and unit tested.
 - **Frontend:** React 18, Vite, TypeScript, Tailwind CSS.
 - **Deployment:** FastAPI serves both the API (`/api/...`) and the built React app, so it runs as one service.
@@ -65,6 +77,11 @@ frontend/src/
 - **Publish:** blocked while HARD conflicts exist, unless you explicitly override. Editing a published
   roster sets it back to DRAFT. Every change is recorded in a change log.
 - **Export:** CSV and colour-coded Excel.
+- **Themes:** 2 light themes (Daylight, Drafting) and 2 dark themes (Night shift, Control room), each
+  with 5 accent colours. The choice is saved in the browser. A link can also set it, for example
+  `/roster?theme=night&accent=pine`.
+- **Shareable what-if links:** `/simulator?person=Kabir Singh&from=2026-12-16` opens with that scenario
+  already checked.
 
 ## Assumptions
 
@@ -81,7 +98,8 @@ frontend/src/
    gap, the gap is flagged with fixes instead of the off being silently removed.
 8. A BACKUP assignment means the manager has pre-approved that person to cover. The generator uses
    backups automatically; any other cover is only suggested.
-9. All names and data are fictional. The demo months are December 2026 and January 2027.
+9. Brand names are well-known Indian D2C brands, used only to make the sample data easy to read. There is
+   no affiliation, and all staffing data is made up. The demo months are December 2026 and January 2027.
 
 ## Tell us how you think
 

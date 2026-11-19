@@ -30,7 +30,7 @@ class Emp:
 
 @dataclass
 class BP:
-    """A brand running one process, e.g. 'Glowly - CS'. Holds the operating rules."""
+    """A brand running one process, e.g. 'Mamaearth - CS'. Holds the operating rules."""
     id: int
     brand_id: int
     brand_name: str

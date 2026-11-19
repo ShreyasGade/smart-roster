@@ -32,10 +32,11 @@ export default function CellEditor({ emp, day, entry, onClose }: Props) {
   const toggle = (id: number) => setBpIds((ids) => (ids.includes(id) ? ids.filter((x) => x !== id) : [...ids, id]));
 
   return (
-    <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50" onClick={onClose}>
-      <div className="bg-white rounded-lg p-5 w-[600px] max-h-[85vh] overflow-y-auto space-y-3" onClick={(e) => e.stopPropagation()}>
-        <h2 className="font-semibold text-lg">{emp.name} - {day}</h2>
-        {entry?.note && <p className="text-sm text-slate-500">Note: {entry.note}</p>}
+    <div className="fixed inset-0 bg-ink/40 flex items-center justify-center z-50 p-4" onClick={onClose}>
+      <div className="panel w-[640px] max-w-full max-h-[85vh] overflow-y-auto" role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
+        <div className="panel-head"><h2>Edit {emp.name}, {day}</h2><button className="btn-light !py-0.5" onClick={onClose}>Close</button></div>
+        <div className="panel-body space-y-3">
+        {entry?.note && <p className="hint">Note: {entry.note}</p>}
         <label className="block text-sm">Status{" "}
           <select className="input" value={status} onChange={(e) => { setStatus(e.target.value as Entry["status"]); setImpact(null); }}>
             {Object.keys(STATUS_STYLE).map((s) => <option key={s}>{s}</option>)}
@@ -43,38 +44,38 @@ export default function CellEditor({ emp, day, entry, onClose }: Props) {
         </label>
         {status === "WORK" && (
           <div className="text-sm">
-            <p className="font-medium">Works on:</p>
+            <p className="font-semibold mb-1">Works on</p>
             {assigned.map((id) => (
               <label key={id} className="block"><input type="checkbox" checked={bpIds.includes(id)} onChange={() => toggle(id)} /> {bpLabel(id)}</label>
             ))}
             <select className="input mt-1" value="" onChange={(e) => e.target.value && toggle(Number(e.target.value))}>
-              <option value="">+ cover another brand-process...</option>
+              <option value="">Add cover for another brand…</option>
               {others.map((b) => <option key={b.id} value={b.id}>{bpLabel(b.id)}</option>)}
             </select>
             {bpIds.filter((id) => !assigned.includes(id)).map((id) => (
-              <label key={id} className="block text-blue-700"><input type="checkbox" checked onChange={() => toggle(id)} /> {bpLabel(id)} (cover)</label>
+              <label key={id} className="block text-accent"><input type="checkbox" checked onChange={() => toggle(id)} /> {bpLabel(id)} (cover)</label>
             ))}
           </div>
         )}
         <div className="flex gap-2">
           <button className="btn-light" onClick={() => run(false)}>Check impact</button>
-          <button className="btn" onClick={() => run(true)}>Save</button>
-          <button className="btn-light ml-auto" onClick={onClose}>Close</button>
+          <button className="btn" onClick={() => run(true)}>Save change</button>
         </div>
-        {error && <p className="text-red-600 text-sm">{error}</p>}
+        {error && <p className="text-sm text-danger">Couldn't save: {error}</p>}
         {impact && (
           <div className="space-y-2">
-            <p className="text-sm font-medium">
+            <p className="text-sm font-semibold">
               This change creates {impact.new_conflicts.length} new conflict(s) and resolves {impact.resolved_conflicts.length}.
             </p>
             <ConflictList conflicts={impact.new_conflicts} readOnly />
             {impact.resolved_conflicts.length > 0 && (
-              <div className="text-sm text-green-700">
+              <div className="text-sm text-ok">
                 Resolved: {impact.resolved_conflicts.map((c) => <div key={c.key}>✓ {c.message}</div>)}
               </div>
             )}
           </div>
         )}
+        </div>
       </div>
     </div>
   );

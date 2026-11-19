@@ -33,7 +33,7 @@ Pod ──< Employee >── Assignment (PRIMARY | BACKUP) ──< BrandProcess 
                                    min staff, per-day overrides, shift
 ```
 
-- **BrandProcess** (e.g. "Glowly - CS") holds the rules. A single brand can run CS 365 days and NDR
+- **BrandProcess** (e.g. "Mamaearth - CS") holds the rules. A single brand can run CS 365 days and NDR
   with Sundays off.
 - **Assignment** is a single many-to-many table. It covers single-resource brands, people working
   across brands, and several people sharing one process.
@@ -149,7 +149,7 @@ Mondays/Saturdays" rules.
 Some scenarios are included on purpose:
 - a 365-day brand with no backup
 - a person who owns two brands going on leave
-- one of three BrewBox employees on leave, with the others covering
+- one of three Sleepy Owl employees on leave, with the others covering
 
 These show both the conflicts being caught and the fixes working.
 

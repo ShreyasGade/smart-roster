@@ -2,7 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-.btn { @apply px-3 py-1.5 rounded text-sm font-medium bg-slate-800 text-white hover:bg-slate-700 disabled:opacity-40; }
-.btn-light { @apply px-3 py-1.5 rounded text-sm font-medium bg-white border border-slate-300 hover:bg-slate-100; }
-.input { @apply border border-slate-300 rounded px-2 py-1 text-sm bg-white; }
-.card { @apply bg-white rounded-lg border border-slate-200 p-4; }
+/* Defaults so the page is readable before the theme script runs */
+:root {
+  --canvas: 243 244 241; --surface: 255 255 255; --line: 201 204 196; --ink: 26 29 26; --muted: 94 99 92;
+  --accent: 31 95 209; --on-accent: 255 255 255;
+}
+
+body {
+  @apply bg-canvas text-ink;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+h1 { font-stretch: 112%; @apply text-2xl font-semibold tracking-tight; }
+h2 { font-stretch: 106%; @apply text-base font-semibold; }
+
+:focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 1px; }
+
+.btn { @apply px-3 py-1.5 text-sm font-medium bg-accent text-on-accent border border-accent hover:brightness-110 disabled:opacity-40; }
+.btn-light { @apply px-3 py-1.5 text-sm font-medium bg-surface text-ink border border-line hover:border-ink disabled:opacity-40; }
+.input { @apply border border-line px-2 py-1 text-sm bg-surface text-ink; }
+.panel { @apply bg-surface border border-line; }
+.panel-head { @apply flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 border-b border-line; }
+.panel-body { @apply p-4; }
+.hint { @apply text-sm text-muted; }

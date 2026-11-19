@@ -18,7 +18,7 @@ export default function SetupPage() {
     api.list<Record<string, unknown>>("leaves").then(setLeaves);
   }, [lookups]);
 
-  if (!lookups) return <p>Loading...</p>;
+  if (!lookups) return <p className="hint">Loading…</p>;
   const { pods, employees, processes, brands, bps, assignments } = lookups;
   const opt = <T extends { id: number }>(rows: T[], label: (r: T) => string) => rows.map((r) => ({ value: r.id, label: label(r) }));
   const podOpts = opt(pods, (p) => p.name);
@@ -107,15 +107,23 @@ export default function SetupPage() {
   const t = tables[tab];
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-xl font-semibold">Setup</h1>
-      <div className="flex flex-wrap gap-2">
-        {TABS.map((name) => (
-          <button key={name} className={tab === name ? "btn" : "btn-light"} onClick={() => setTab(name)}>{name}</button>
-        ))}
-        <button className="btn-light ml-auto" onClick={reload}>Refresh</button>
+    <div className="space-y-5">
+      <div className="border-b border-line pb-4">
+        <h1>Setup</h1>
+        <p className="mt-1">People, brands and rules the roster is built from. Regenerate the roster after big changes.</p>
       </div>
-      <div className="card">
+      <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap border border-line" role="tablist">
+          {TABS.map((name) => (
+            <button key={name} role="tab" aria-selected={tab === name} onClick={() => setTab(name)}
+              className={`px-3 py-1.5 text-sm border-r border-line last:border-r-0 ${tab === name ? "bg-accent text-on-accent font-semibold" : "bg-surface hover:bg-canvas"}`}>
+              {name}
+            </button>
+          ))}
+        </div>
+        <button className="btn-light ml-auto" onClick={reload}>Reload</button>
+      </div>
+      <div className="panel panel-body">
         <CrudTable key={tab} table={t.table} rows={t.rows} columns={t.columns} help={t.help} />
       </div>
     </div>

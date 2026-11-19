@@ -78,7 +78,7 @@ function JsonEditor({ value, onChange }: { value: unknown; onChange: (v: unknown
   const [text, setText] = useState(JSON.stringify(value ?? {}));
   const [bad, setBad] = useState(false);
   return (
-    <input className={`input w-48 font-mono text-xs ${bad ? "border-red-500" : ""}`} value={text}
+    <input className={`input w-48 text-xs ${bad ? "border-danger" : ""}`} value={text}
       onChange={(e) => {
         setText(e.target.value);
         try { onChange(JSON.parse(e.target.value)); setBad(false); } catch { setBad(true); }
@@ -120,7 +120,7 @@ export default function CrudTable({ table, rows, columns, help }: Props) {
   }
 
   const editorRow = (
-    <tr className="bg-yellow-50">
+    <tr className="bg-warnSoft">
       {columns.map((c) => (
         <td key={c.key} className="p-1 align-top">
           <Editor col={c} value={editing?.[c.key]} onChange={(v) => setEditing({ ...editing, [c.key]: v })} />
@@ -136,15 +136,15 @@ export default function CrudTable({ table, rows, columns, help }: Props) {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-3">
-        <button className="btn" onClick={() => setEditing(blank())}>+ Add</button>
-        {help && <p className="text-sm text-slate-500">{help}</p>}
+        <button className="btn" onClick={() => setEditing(blank())}>Add row</button>
+        {help && <p className="hint">{help}</p>}
       </div>
-      {error && <p className="text-red-600 text-sm">{error}</p>}
+      {error && <p className="text-sm text-danger">Couldn't save: {error}</p>}
       <div className="overflow-x-auto">
         <table className="text-sm w-full">
           <thead>
-            <tr className="text-left border-b">
-              {columns.map((c) => <th key={c.key} className="p-1">{c.label}</th>)}
+            <tr className="text-left border-b border-line text-muted">
+              {columns.map((c) => <th key={c.key} className="px-2 py-1.5 font-semibold">{c.label}</th>)}
               <th />
             </tr>
           </thead>
@@ -152,11 +152,11 @@ export default function CrudTable({ table, rows, columns, help }: Props) {
             {editing && !editing.id && editorRow}
             {rows.map((row) =>
               editing?.id === row.id ? <Fragment key={row.id}>{editorRow}</Fragment> : (
-                <tr key={row.id} className="border-b border-slate-100 hover:bg-slate-50">
-                  {columns.map((c) => <td key={c.key} className="p-1">{display(c, row[c.key])}</td>)}
+                <tr key={row.id} className="border-b border-line/60 hover:bg-canvas">
+                  {columns.map((c) => <td key={c.key} className="px-2 py-1">{display(c, row[c.key])}</td>)}
                   <td className="p-1 whitespace-nowrap text-right">
-                    <button className="text-blue-700 mr-2" onClick={() => setEditing({ ...row })}>Edit</button>
-                    <button className="text-red-600" onClick={() => remove(row)}>Delete</button>
+                    <button className="text-accent mr-3 hover:underline" onClick={() => setEditing({ ...row })}>Edit</button>
+                    <button className="text-danger hover:underline" onClick={() => remove(row)}>Delete</button>
                   </td>
                 </tr>
               ),

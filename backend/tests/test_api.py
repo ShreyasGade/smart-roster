@@ -18,8 +18,8 @@ def test_full_flow():
         hard = [c for c in data["conflicts"] if c["severity"] == "HARD"]
         assert hard and all(c["suggestions"] for c in hard)
 
-        # FitFuel owner (Divya) is on approved leave on 9 Dec -> gap with a suggested fix
-        gap = next(c for c in hard if c["date"] == "2026-12-09" and "FitFuel - CS" in c["message"])
+        # The Whole Truth owner (Shreshtha) is on approved leave on 9 Dec -> gap with a suggested fix
+        gap = next(c for c in hard if c["date"] == "2026-12-09" and "The Whole Truth - CS" in c["message"])
         fix = gap["suggestions"][0]
         assert fix["changes"]
         res = client.post("/api/rosters/2026-12/changes",

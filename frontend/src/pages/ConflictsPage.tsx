@@ -9,31 +9,34 @@ export default function ConflictsPage() {
   const [type, setType] = useState("");
   const [search, setSearch] = useState("");
 
-  if (!roster) return <p>No roster for {month} yet.</p>;
+  if (!roster) return <p className="hint">No roster for {month} yet.</p>;
   const types = [...new Set(roster.conflicts.map((c) => c.type))];
   const list = roster.conflicts.filter((c) =>
     (!severity || c.severity === severity) && (!type || c.type === type) &&
     (!search || c.message.toLowerCase().includes(search.toLowerCase())));
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-xl font-semibold">Conflicts - {month}</h1>
-      <p className="text-sm text-slate-600">
-        <b>HARD</b> = client coverage or approved leave is broken (must fix). <b>SOFT</b> = preferences, weekly-off
-        entitlement, holiday work (comp-off owed). <b>INFO</b> = context such as pending leave requests.
-        Suggestions are never applied automatically - you decide.
-      </p>
-      <div className="flex flex-wrap gap-2">
-        <select className="input" value={severity} onChange={(e) => setSeverity(e.target.value)}>
-          <option value="">All severities</option>
-          <option>HARD</option><option>SOFT</option><option>INFO</option>
+    <div className="space-y-5 max-w-5xl">
+      <div className="border-b border-line pb-4">
+        <h1>Conflicts</h1>
+        <p className="mt-1 max-w-3xl">
+          <b>Must fix</b> means a client is short of cover or someone is rostered on approved leave.{" "}
+          <b>Preference</b> covers missed preferred offs and comp-offs owed. Nothing is changed until you apply a fix.
+        </p>
+      </div>
+      <div className="flex flex-wrap gap-2 items-center">
+        <select aria-label="Severity" className="input" value={severity} onChange={(e) => setSeverity(e.target.value)}>
+          <option value="">All</option>
+          <option value="HARD">Must fix</option>
+          <option value="SOFT">Preference</option>
+          <option value="INFO">Notes</option>
         </select>
-        <select className="input" value={type} onChange={(e) => setType(e.target.value)}>
-          <option value="">All types</option>
-          {types.map((t) => <option key={t}>{t}</option>)}
+        <select aria-label="Type" className="input" value={type} onChange={(e) => setType(e.target.value)}>
+          <option value="">Any type</option>
+          {types.map((t) => <option key={t} value={t}>{t.replace(/_/g, " ").toLowerCase()}</option>)}
         </select>
-        <input className="input" placeholder="Search brand / person..." value={search} onChange={(e) => setSearch(e.target.value)} />
-        <span className="text-sm text-slate-500 self-center">{list.length} shown</span>
+        <input aria-label="Search" className="input w-64" placeholder="Search a brand or person" value={search} onChange={(e) => setSearch(e.target.value)} />
+        <span className="hint">{list.length} shown</span>
       </div>
       <ConflictList conflicts={list} />
     </div>

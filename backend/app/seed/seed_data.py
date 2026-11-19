@@ -1,4 +1,5 @@
-"""Fictional sample data: 34 employees, 5 pods, 22 brands (18 single-resource, 4 multi-resource).
+"""Sample data: 34 employees, 5 pods, 22 brands (18 single-resource, 4 multi-resource).
+Brand names are well-known Indian D2C brands used for illustration only. All staffing data is made up.
 
 Format of a brand process: (process_code, preset, min_staff, overrides, shift, primary_staff, backup_staff)
 Presets: ALL_DAYS (365 days), NO_HOLIDAYS, NO_SUN_NO_HOLIDAYS, or a list of weekdays for CUSTOM.
@@ -17,16 +18,16 @@ PODS = ["Alpha", "Bravo", "Comet", "Delta", "Echo"]
 # name, pod, preferred_off_day (0=Mon..6=Sun or None), extra skills, is_pod_lead
 EMPLOYEES = [
     # Pod leads (oversee the pod, act as backups)
-    ("Neha Kapoor", "Alpha", None, ["CS", "ACC", "RET"], True),
-    ("Arjun Mehta", "Bravo", None, ["CS", "ACC", "CHAT"], True),
-    ("Kavya Iyer", "Comet", 5, ["CS", "NDR"], True),
-    ("Rohan Desai", "Delta", 6, ["CS", "RET"], True),
-    ("Sana Qureshi", "Echo", 0, ["CS", "CHAT"], True),
+    ("Shreyas Gade", "Alpha", None, ["CS", "ACC", "RET"], True),
+    ("Shantil Khadatkar", "Bravo", None, ["CS", "ACC", "CHAT"], True),
+    ("Harshal Bhosale", "Comet", 5, ["CS", "NDR"], True),
+    ("Pratham Pagare", "Delta", 6, ["CS", "RET"], True),
+    ("Tejas Nagpure", "Echo", 0, ["CS", "CHAT"], True),
     # Floaters (no own brand, cover across brands)
     ("Vikram Nair", "Comet", 2, ["CS", "NDR", "ACC"], False),
     ("Meera Pillai", "Echo", 3, ["CS", "NDR", "ACC"], False),
     # Multi-resource brand staff
-    ("Riya Shah", "Alpha", 2, ["CHAT"], False),
+    ("Riya Shrivastava", "Alpha", 2, ["CHAT"], False),
     ("Aman Gupta", "Alpha", 6, ["CS"], False),
     ("Pooja Rao", "Alpha", 6, ["ACC"], False),
     ("Ishaan Verma", "Bravo", 1, ["RET"], False),
@@ -38,9 +39,9 @@ EMPLOYEES = [
     ("Anjali Menon", "Delta", None, [], False),
     # Single-resource brand owners
     ("Kabir Singh", "Alpha", 6, ["RET"], False),
-    ("Divya Nair", "Alpha", 6, ["ACC"], False),
+    ("Shreshtha Pandey", "Alpha", 6, ["ACC"], False),
     ("Rahul Jain", "Alpha", 6, ["RET"], False),
-    ("Harsh Malhotra", "Alpha", 6, ["ACC"], False),
+    ("Janhavi Ambre", "Alpha", 6, ["ACC"], False),
     ("Simran Kaur", "Bravo", 6, ["NDR"], False),
     ("Manav Shah", "Bravo", None, ["ACC"], False),
     ("Priya Das", "Bravo", 6, ["ACC"], False),
@@ -63,98 +64,98 @@ MON_FRI = [0, 1, 2, 3, 4]
 BRANDS = [
     # ---- Multi-resource brands ----
     # 3 people, separate processes. Aman is a backup on CS.
-    ("UrbanThread", "Alpha", [
-        ("CS", "ALL_DAYS", 1, {}, "GENERAL", ["Riya Shah"], ["Aman Gupta"]),
+    ("The Souled Store", "Alpha", [
+        ("CS", "ALL_DAYS", 1, {}, "GENERAL", ["Riya Shrivastava"], ["Aman Gupta"]),
         ("ACC", NS, 1, {}, "GENERAL", ["Aman Gupta"], []),
         ("NDR", NS, 1, {}, "GENERAL", ["Pooja Rao"], []),
     ]),
     # 2 people share CS (Mondays need 2), one also does ACC
-    ("Glowly", "Bravo", [
+    ("Mamaearth", "Bravo", [
         ("CS", "ALL_DAYS", 1, {"weekday:0": 2}, "GENERAL", ["Ishaan Verma", "Tanvi Joshi"], []),
         ("ACC", NS, 1, {}, "GENERAL", ["Tanvi Joshi"], []),
     ]),
     # 3 people: two share 365-day CS, one handles NDR
-    ("BrewBox", "Comet", [
+    ("Sleepy Owl", "Comet", [
         ("CS", "ALL_DAYS", 1, {}, "GENERAL", ["Aditya Kulkarni", "Sneha Reddy"], []),
         ("NDR", NS, 1, {}, "GENERAL", ["Farhan Ali"], []),
     ]),
     # 2 people share CS (Saturdays need 2), Retention runs Mon-Fri only
-    ("KiddoKart", "Delta", [
+    ("FirstCry", "Delta", [
         ("CS", "NO_HOLIDAYS", 1, {"weekday:5": 2}, "GENERAL", ["Nikhil Bose", "Anjali Menon"], []),
         ("RET", MON_FRI, 1, {}, "GENERAL", ["Anjali Menon"], []),
     ]),
     # ---- Single-resource brands (one person runs every process) ----
-    ("PawPantry", "Alpha", [
-        ("CS", "ALL_DAYS", 1, {}, "MORNING", ["Kabir Singh"], ["Neha Kapoor"]),
+    ("Heads Up For Tails", "Alpha", [
+        ("CS", "ALL_DAYS", 1, {}, "MORNING", ["Kabir Singh"], ["Shreyas Gade"]),
         ("ACC", NS, 1, {}, "GENERAL", ["Kabir Singh"], []),
     ]),
-    ("FitFuel", "Alpha", [  # 365-day CS with NO backup configured -> gaps will be flagged
-        ("CS", "ALL_DAYS", 1, {}, "GENERAL", ["Divya Nair"], []),
-        ("RET", NS, 1, {}, "GENERAL", ["Divya Nair"], []),
+    ("The Whole Truth", "Alpha", [  # 365-day CS with NO backup configured -> gaps will be flagged
+        ("CS", "ALL_DAYS", 1, {}, "GENERAL", ["Shreshtha Pandey"], []),
+        ("RET", NS, 1, {}, "GENERAL", ["Shreshtha Pandey"], []),
     ]),
-    ("LeafLuxe", "Alpha", [
+    ("Plum", "Alpha", [
         ("CS", NS, 1, {}, "GENERAL", ["Rahul Jain"], []),
         ("ACC", NS, 1, {}, "GENERAL", ["Rahul Jain"], []),
         ("NDR", NS, 1, {}, "GENERAL", ["Rahul Jain"], []),
     ]),
-    ("SnackSmith", "Alpha", [
-        ("CS", NS, 1, {}, "GENERAL", ["Harsh Malhotra"], []),
-        ("NDR", NS, 1, {}, "GENERAL", ["Harsh Malhotra"], []),
+    ("Licious", "Alpha", [
+        ("CS", NS, 1, {}, "GENERAL", ["Janhavi Ambre"], []),
+        ("NDR", NS, 1, {}, "GENERAL", ["Janhavi Ambre"], []),
     ]),
-    ("MintMoss", "Alpha", [
-        ("CS", NS, 1, {}, "GENERAL", ["Harsh Malhotra"], []),
+    ("Minimalist", "Alpha", [
+        ("CS", NS, 1, {}, "GENERAL", ["Janhavi Ambre"], []),
     ]),
-    ("AuraHome", "Bravo", [
+    ("Wakefit", "Bravo", [
         ("CS", NS, 1, {}, "GENERAL", ["Simran Kaur"], []),
         ("ACC", NS, 1, {}, "GENERAL", ["Simran Kaur"], []),
     ]),
-    ("CraftCuppa", "Bravo", [
+    ("Rage Coffee", "Bravo", [
         ("CS", NS, 1, {}, "GENERAL", ["Manav Shah"], []),
         ("RET", NS, 1, {}, "GENERAL", ["Manav Shah"], []),
     ]),
-    ("ZenZest", "Bravo", [
-        ("CS", "ALL_DAYS", 1, {}, "EVENING", ["Priya Das"], ["Arjun Mehta"]),
+    ("boAt", "Bravo", [
+        ("CS", "ALL_DAYS", 1, {}, "EVENING", ["Priya Das"], ["Shantil Khadatkar"]),
         ("CHAT", NS, 1, {}, "GENERAL", ["Priya Das"], []),
     ]),
-    ("BloomBox", "Bravo", [
+    ("SUGAR Cosmetics", "Bravo", [
         ("CS", NS, 1, {}, "GENERAL", ["Yash Patil"], []),
         ("ACC", NS, 1, {}, "GENERAL", ["Yash Patil"], []),
         ("NDR", NS, 1, {}, "GENERAL", ["Yash Patil"], []),
     ]),
-    ("TrailTrek", "Comet", [
+    ("Lenskart", "Comet", [
         ("CS", "ALL_DAYS", 1, {}, "GENERAL", ["Aarav Khanna"], ["Vikram Nair"]),
         ("NDR", NS, 1, {}, "GENERAL", ["Aarav Khanna"], []),
     ]),
-    ("NoshNest", "Comet", [
+    ("Epigamia", "Comet", [
         ("CS", NS, 1, {}, "GENERAL", ["Ritu Sharma"], []),
         ("ACC", NS, 1, {}, "GENERAL", ["Ritu Sharma"], []),
     ]),
-    ("SilkSage", "Comet", [
+    ("Pilgrim", "Comet", [
         ("CS", MON_FRI, 1, {}, "GENERAL", ["Dev Chopra"], []),
         ("ACC", MON_FRI, 1, {}, "GENERAL", ["Dev Chopra"], []),
     ]),
-    ("PeppyPet", "Delta", [
+    ("Supertails", "Delta", [
         ("CS", NS, 1, {}, "GENERAL", ["Lakshmi Iyer"], []),
         ("RET", NS, 1, {}, "GENERAL", ["Lakshmi Iyer"], []),
     ]),
-    ("VoltWear", "Delta", [
+    ("Noise", "Delta", [
         ("CS", NS, 1, {}, "GENERAL", ["Omkar Joshi"], []),
         ("ACC", NS, 1, {}, "GENERAL", ["Omkar Joshi"], []),
         ("NDR", NS, 1, {}, "GENERAL", ["Omkar Joshi"], []),
     ]),
-    ("HerbHaus", "Delta", [
+    ("mCaffeine", "Delta", [
         ("CS", NS, 1, {}, "GENERAL", ["Zoya Khan"], []),
         ("CHAT", NS, 1, {}, "GENERAL", ["Zoya Khan"], []),
     ]),
-    ("CocoCrush", "Echo", [
-        ("CS", "NO_HOLIDAYS", 1, {}, "GENERAL", ["Gaurav Sethi"], ["Sana Qureshi"]),
+    ("Bombay Shaving Company", "Echo", [
+        ("CS", "NO_HOLIDAYS", 1, {}, "GENERAL", ["Gaurav Sethi"], ["Tejas Nagpure"]),
         ("ACC", NS, 1, {}, "GENERAL", ["Gaurav Sethi"], []),
     ]),
-    ("DapperDen", "Echo", [
+    ("Snitch", "Echo", [
         ("CS", "NO_HOLIDAYS", 1, {}, "GENERAL", ["Nisha Bhat"], ["Meera Pillai"]),
         ("NDR", NS, 1, {}, "GENERAL", ["Nisha Bhat"], []),
     ]),
-    ("LunaLoom", "Echo", [
+    ("Bewakoof", "Echo", [
         ("CS", MON_FRI, 1, {}, "GENERAL", ["Tarun Rao"], []),
         ("CHAT", MON_FRI, 1, {}, "GENERAL", ["Tarun Rao"], []),
     ]),
@@ -170,17 +171,17 @@ HOLIDAYS = [
 
 # employee, date, type, status, note
 LEAVES = [
-    ("Divya Nair", "2026-12-09", "LEAVE", "APPROVED", "Single owner of FitFuel away on a working day"),
-    ("Harsh Malhotra", "2026-12-17", "LEAVE", "APPROVED", "Owns two brands - gaps in both"),
-    ("Ishaan Verma", "2026-12-14", "LEAVE", "APPROVED", "Glowly needs 2 on Mondays"),
-    ("Aditya Kulkarni", "2026-12-21", "LEAVE", "APPROVED", "Sneha can cover BrewBox CS"),
-    ("Aditya Kulkarni", "2026-12-22", "LEAVE", "APPROVED", "Sneha can cover BrewBox CS"),
-    ("Nikhil Bose", "2026-12-19", "LEAVE", "APPROVED", "KiddoKart needs 2 on Saturdays"),
+    ("Shreshtha Pandey", "2026-12-09", "LEAVE", "APPROVED", "Single owner of The Whole Truth away on a working day"),
+    ("Janhavi Ambre", "2026-12-17", "LEAVE", "APPROVED", "Owns two brands - gaps in both"),
+    ("Ishaan Verma", "2026-12-14", "LEAVE", "APPROVED", "Mamaearth needs 2 on Mondays"),
+    ("Aditya Kulkarni", "2026-12-21", "LEAVE", "APPROVED", "Sneha can cover Sleepy Owl CS"),
+    ("Aditya Kulkarni", "2026-12-22", "LEAVE", "APPROVED", "Sneha can cover Sleepy Owl CS"),
+    ("Nikhil Bose", "2026-12-19", "LEAVE", "APPROVED", "FirstCry needs 2 on Saturdays"),
     ("Pooja Rao", "2026-12-10", "LEAVE", "APPROVED", ""),
     ("Rahul Jain", "2026-12-30", "LEAVE", "APPROVED", "Year-end trip"),
     ("Rahul Jain", "2026-12-31", "LEAVE", "APPROVED", "Year-end trip"),
     ("Tarun Rao", "2026-12-23", "LEAVE", "APPROVED", ""),
-    ("Neha Kapoor", "2026-12-24", "LEAVE", "APPROVED", "Pod lead away"),
+    ("Shreyas Gade", "2026-12-24", "LEAVE", "APPROVED", "Pod lead away"),
     ("Simran Kaur", "2026-12-26", "COMP_OFF", "APPROVED", "Comp-off for Diwali"),
     ("Lakshmi Iyer", "2026-12-04", "COMP_OFF", "APPROVED", "Comp-off for Diwali"),
     ("Zoya Khan", "2026-12-28", "LEAVE", "PENDING", "Awaiting approval - not rostered yet"),

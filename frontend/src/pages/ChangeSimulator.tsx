@@ -1,6 +1,6 @@
 // Change handling: someone becomes unavailable after the roster was generated.
 // Preview shows the impact on every brand they handle, plus ranked fixes; Apply saves it.
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api, Impact } from "../api";
 import { monthDays, useApp } from "../data";
 import ConflictList from "../components/ConflictList";
@@ -13,9 +13,24 @@ export default function ChangeSimulator() {
   const [type, setType] = useState("UNAVAILABLE");
   const [impact, setImpact] = useState<Impact | null>(null);
   const [error, setError] = useState("");
+  const [fromLink, setFromLink] = useState(false);
 
-  if (!lookups) return <p>Loading...</p>;
-  if (!roster) return <p>No roster for {month} yet.</p>;
+  // A link like ?person=Kabir Singh&from=2026-12-16&to=2026-12-17 opens with that scenario already checked
+  useEffect(() => {
+    if (fromLink || !lookups || !roster) return;
+    setFromLink(true);
+    const q = new URLSearchParams(window.location.search);
+    const person = lookups.employees.find((e) => e.name === q.get("person"));
+    const start = q.get("from");
+    if (!person || !start) return;
+    const end = q.get("to") || start;
+    setEmpId(person.id); setFrom(start); setTo(q.get("to") || "");
+    const range = monthDays(month).filter((d) => d >= start && d <= end);
+    api.unavailable(month, person.id, range, "UNAVAILABLE", false).then(setImpact).catch((e) => setError(String(e)));
+  }, [fromLink, lookups, roster, month]);
+
+  if (!lookups) return <p className="hint">Loading…</p>;
+  if (!roster) return <p className="hint">No roster for {month} yet.</p>;
   const emp = lookups.employees.find((e) => e.id === (empId ?? lookups.employees[0]?.id));
   const days = monthDays(month);
   const start = from || days[0];
@@ -33,53 +48,52 @@ export default function ChangeSimulator() {
   }
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-xl font-semibold">Change simulator</h1>
-      <p className="text-sm text-slate-600">
-        What happens if someone becomes unavailable after the roster is generated? Preview the impact first;
-        nothing is saved until you click Apply.
-      </p>
-      <div className="card flex flex-wrap gap-3 items-end">
-        <label className="text-sm">Employee<br />
+    <div className="space-y-5 max-w-5xl">
+      <div className="border-b border-line pb-4">
+        <h1>What if someone can't come in?</h1>
+        <p className="mt-1">Pick a person and the days they'll be away. You'll see every brand that loses cover and how to fill it. Nothing is saved until you apply it.</p>
+      </div>
+      <div className="panel panel-body flex flex-wrap gap-3 items-end">
+        <label className="text-sm text-muted">Person<br />
           <select className="input" value={emp?.id} onChange={(e) => { setEmpId(Number(e.target.value)); setImpact(null); }}>
             {lookups.employees.map((e) => <option key={e.id} value={e.id}>{e.name}</option>)}
           </select>
         </label>
-        <label className="text-sm">From<br />
+        <label className="text-sm text-muted">From<br />
           <input type="date" className="input" min={days[0]} max={days[days.length - 1]} value={start} onChange={(e) => { setFrom(e.target.value); setImpact(null); }} />
         </label>
-        <label className="text-sm">To (optional)<br />
+        <label className="text-sm text-muted">Until (optional)<br />
           <input type="date" className="input" min={start} max={days[days.length - 1]} value={to} onChange={(e) => { setTo(e.target.value); setImpact(null); }} />
         </label>
-        <label className="text-sm">Reason<br />
+        <label className="text-sm text-muted">Reason<br />
           <select className="input" value={type} onChange={(e) => setType(e.target.value)}>
-            <option value="UNAVAILABLE">Unavailable (sick / emergency)</option>
+            <option value="UNAVAILABLE">Unavailable (sick or emergency)</option>
             <option value="LEAVE">Approved leave</option>
             <option value="COMP_OFF">Comp-off</option>
           </select>
         </label>
-        <button className="btn-light" onClick={() => run(false)}>Preview impact</button>
-        <button className="btn" disabled={!impact || impact.applied} onClick={() => run(true)}>Apply change</button>
+        <button className="btn-light" onClick={() => run(false)}>Show impact</button>
+        <button className="btn" disabled={!impact || impact.applied} onClick={() => run(true)}>Mark as away</button>
       </div>
       {emp && (
         <p className="text-sm">
-          <b>{emp.name}</b> handles: {assigned.map((a) => `${bpLabel(a.brand_process_id)}${a.role === "BACKUP" ? " (backup)" : ""}`).join(", ") || "nothing"}
+          <b>{emp.name}</b> handles {assigned.map((a) => `${bpLabel(a.brand_process_id)}${a.role === "BACKUP" ? " (backup)" : ""}`).join(", ") || "nothing"}.
         </p>
       )}
-      {error && <p className="text-red-600 text-sm">{error}</p>}
+      {error && <p className="text-sm text-danger">Couldn't check this change: {error}</p>}
       {impact && (
-        <div className="card space-y-3">
-          <p className="font-medium">
-            {impact.applied ? "Applied. " : "Preview: "}
+        <section className="panel panel-body space-y-3">
+          <p className="font-semibold">
+            {impact.applied ? "Saved. " : "If this happens: "}
             {impact.new_conflicts.length === 0
-              ? "No new conflicts - the remaining team can maintain the required coverage."
-              : `${impact.new_conflicts.length} new conflict(s). Suggested fixes are listed under each one.`}
+              ? "no new gaps. The rest of the team still covers every brand."
+              : `${impact.new_conflicts.length} new conflict(s). Fixes are listed under each one${impact.applied ? "." : "; mark the person as away to apply them."}`}
           </p>
           <ConflictList conflicts={impact.new_conflicts} readOnly={!impact.applied} />
           {impact.applied && impact.new_conflicts.length > 0 && (
-            <p className="text-sm text-slate-500">Tip: apply a suggestion above, or regenerate from this date on the Roster page.</p>
+            <p className="hint">You can also regenerate from this date on the Roster page.</p>
           )}
-        </div>
+        </section>
       )}
     </div>
   );
