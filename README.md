@@ -10,10 +10,10 @@ for 34 employees across 22 brands, 5 processes and 5 pods.
 | | |
 |---|---|
 | **Overview** (Daylight, Signal blue): coverage, must-fix count, who is on shift on any day | ![Overview](docs/screenshots/overview.png) |
-| **Roster** (Night shift, Pine): every person and day, grouped by pod, with gaps outlined | ![Roster](docs/screenshots/roster.png) |
+| **Roster** (Deep sea, Harbour teal): every person and day, grouped by pod, with gaps outlined | ![Roster](docs/screenshots/roster.png) |
 | **Conflicts** (Control room, Railway yellow): plain-English problems with ranked, pre-tested fixes | ![Conflicts](docs/screenshots/conflicts.png) |
-| **What if** (Drafting, Plum): one person's absence, the gaps it causes, and how to fill them | ![What if](docs/screenshots/what-if.png) |
-| **Setup** (Daylight, Brick): people, brands, rules and assignments, editable without code changes | ![Setup](docs/screenshots/setup.png) |
+| **What if** (Mint ledger, Plum): one person's absence, the gaps it causes, and how to fill them | ![What if](docs/screenshots/what-if.png) |
+| **Setup** (Concrete, Saffron): people, brands, rules and assignments, editable without code changes | ![Setup](docs/screenshots/setup.png) |
 
 - **Backend:** Python 3.12, FastAPI, SQLAlchemy, SQLite. The scheduler is pure Python and unit tested.
 - **Frontend:** React 18, Vite, TypeScript, Tailwind CSS.
@@ -77,8 +77,8 @@ frontend/src/
 - **Publish:** blocked while HARD conflicts exist, unless you explicitly override. Editing a published
   roster sets it back to DRAFT. Every change is recorded in a change log.
 - **Export:** CSV and colour-coded Excel.
-- **Themes:** 2 light themes (Daylight, Drafting) and 2 dark themes (Night shift, Control room), each
-  with 5 accent colours. The choice is saved in the browser. A link can also set it, for example
+- **Themes:** 5 light themes (Daylight, Drafting, Concrete, Mint ledger, High contrast) and 5 dark themes
+  (Night shift, Control room, Deep sea, Carbon, High contrast dark), each with 8 accent colours. The choice is saved in the browser. A link can also set it, for example
   `/roster?theme=night&accent=pine`.
 - **Shareable what-if links:** `/simulator?person=Kabir Singh&from=2026-12-16` opens with that scenario
   already checked.

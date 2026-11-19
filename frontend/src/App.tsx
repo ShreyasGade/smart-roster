@@ -19,7 +19,7 @@ export default function App() {
   const { month, setMonth, roster, error, loading } = useApp();
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="bg-surface border-b border-line">
+      <header className="tint border-t-4 border-accent border-b border-line">
         <div className="flex flex-wrap items-end gap-x-8 gap-y-2 px-4 md:px-6 pt-3">
           <div className="pb-3 flex items-baseline gap-2">
             <span className="w-3 h-3 bg-accent inline-block self-center" />

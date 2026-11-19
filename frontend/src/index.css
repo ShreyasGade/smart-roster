@@ -10,19 +10,28 @@
 
 body {
   @apply bg-canvas text-ink;
+  accent-color: rgb(var(--accent)); /* checkboxes, radios */
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum";
 }
 
-h1 { font-stretch: 112%; @apply text-2xl font-semibold tracking-tight; }
+h1 { font-stretch: 112%; @apply text-2xl font-semibold tracking-tight border-l-[6px] border-accent pl-3; }
 h2 { font-stretch: 106%; @apply text-base font-semibold; }
 
 :focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 1px; }
 
 .btn { @apply px-3 py-1.5 text-sm font-medium bg-accent text-on-accent border border-accent hover:brightness-110 disabled:opacity-40; }
 .btn-light { @apply px-3 py-1.5 text-sm font-medium bg-surface text-ink border border-line hover:border-ink disabled:opacity-40; }
-.input { @apply border border-line px-2 py-1 text-sm bg-surface text-ink; }
+.input { @apply border border-line px-2 py-1 text-sm bg-surface text-ink focus:border-accent; }
 .panel { @apply bg-surface border border-line; }
-.panel-head { @apply flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 border-b border-line; }
+.panel-head { @apply flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 border-b-2 border-accent; }
 .panel-body { @apply p-4; }
 .hint { @apply text-sm text-muted; }
+
+/* Accent tints mixed into the surface (solid, so sticky table cells stay opaque) */
+@layer utilities {
+  .tint { background-color: color-mix(in srgb, rgb(var(--accent)) 9%, rgb(var(--surface))); }
+  .tint-strong { background-color: color-mix(in srgb, rgb(var(--accent)) 18%, rgb(var(--surface))); }
+}
+.panel-head { background-color: color-mix(in srgb, rgb(var(--accent)) 9%, rgb(var(--surface))); }
+a { text-decoration-color: rgb(var(--accent)); }

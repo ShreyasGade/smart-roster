@@ -53,7 +53,7 @@ export default function ConflictList({ conflicts, onApplied, readOnly }: { confl
                 <ol className="mt-2 space-y-1">
                   {c.suggestions.map((s, i) => (
                     <li key={i} className="flex flex-wrap items-center gap-2 text-muted">
-                      <span className="text-xs text-ink font-semibold w-12 shrink-0">{s.changes.length ? `Fix ${i + 1}` : "Note"}</span>
+                      <span className="text-xs text-accent font-semibold w-12 shrink-0">{s.changes.length ? `Fix ${i + 1}` : "Note"}</span>
                       <span className="flex-1 min-w-[240px]">{s.description}</span>
                       {s.changes.length > 0 && !readOnly && (
                         <button className="btn-light !py-0.5 text-xs" disabled={!!busy} onClick={() => apply(c, s)}>

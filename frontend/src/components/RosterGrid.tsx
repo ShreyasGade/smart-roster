@@ -43,7 +43,7 @@ export function DayHeader({ days }: { days: string[] }) {
         return (
           <th key={d} title={hol || ""} scope="col"
             className={`px-0 py-1 font-normal text-[10px] leading-tight min-w-[28px] border-l border-line
-              ${hol ? "bg-hol text-hol-ink" : wd >= 5 ? "bg-canvas" : ""}`}>
+              ${hol ? "bg-hol text-hol-ink" : wd >= 5 ? "tint-strong" : ""}`}>
             <span className="text-muted">{DAY_NAMES[wd].slice(0, 2)}</span><br />
             <span className="text-xs font-semibold">{Number(d.slice(8))}</span>
           </th>
@@ -78,9 +78,9 @@ export default function RosterGrid({ employees, onCellClick }: Props) {
   return (
     <div className="overflow-x-auto border border-line">
       <table className="text-xs border-collapse">
-        <thead className="bg-surface">
+        <thead className="tint">
           <tr className="border-b border-line">
-            <th scope="col" className="text-left px-3 sticky left-0 bg-surface min-w-[170px] font-semibold">Employee</th>
+            <th scope="col" className="text-left px-3 sticky left-0 tint min-w-[170px] font-semibold">Employee</th>
             <DayHeader days={days} />
           </tr>
         </thead>
@@ -88,8 +88,8 @@ export default function RosterGrid({ employees, onCellClick }: Props) {
           {employees.map((emp, i) => {
             const newPod = i === 0 || employees[i - 1].pod_id !== emp.pod_id;
             return (
-              <tr key={emp.id} className={newPod && i > 0 ? "border-t-2 border-line" : "border-t border-line/60"}>
-                <th scope="row" className="px-3 py-0.5 sticky left-0 bg-surface whitespace-nowrap text-left font-normal">
+              <tr key={emp.id} className={`group ${newPod && i > 0 ? "border-t-2 border-accent/60" : "border-t border-line/60"}`}>
+                <th scope="row" className="px-3 py-0.5 sticky left-0 bg-surface group-hover:tint-strong whitespace-nowrap text-left font-normal">
                   {emp.name}
                   {emp.is_pod_lead && <span className="ml-1.5 text-[10px] px-1 border border-accent text-accent">lead {podName(emp.pod_id)}</span>}
                 </th>

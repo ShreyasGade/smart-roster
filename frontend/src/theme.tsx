@@ -10,10 +10,18 @@ interface Base {
 }
 
 export const BASES: Record<string, Base> = {
+  // light
   daylight: { name: "Daylight", kind: "light", canvas: "#F3F4F1", surface: "#FFFFFF", line: "#C9CCC4", ink: "#1A1D1A", muted: "#5E635C" },
   drafting: { name: "Drafting", kind: "light", canvas: "#EEF2F7", surface: "#FBFCFE", line: "#BFCADB", ink: "#12223A", muted: "#52627A" },
+  concrete: { name: "Concrete", kind: "light", canvas: "#E9E9E7", surface: "#F7F7F6", line: "#BDBDB8", ink: "#1C1C1C", muted: "#5C5C58" },
+  ledger: { name: "Mint ledger", kind: "light", canvas: "#E8F2EC", surface: "#F7FBF8", line: "#B5CFC0", ink: "#12261B", muted: "#4C6858" },
+  sharp: { name: "High contrast", kind: "light", canvas: "#FFFFFF", surface: "#FFFFFF", line: "#1A1A1A", ink: "#000000", muted: "#3A3A3A" },
+  // dark
   night: { name: "Night shift", kind: "dark", canvas: "#161A1F", surface: "#1E242B", line: "#36404B", ink: "#E3E7EB", muted: "#8C97A3" },
   control: { name: "Control room", kind: "dark", canvas: "#1B1712", surface: "#241F18", line: "#403829", ink: "#EDE6D9", muted: "#A39883" },
+  deepsea: { name: "Deep sea", kind: "dark", canvas: "#0E1A25", surface: "#142332", line: "#28405A", ink: "#DAE6F0", muted: "#84A0B9" },
+  carbon: { name: "Carbon", kind: "dark", canvas: "#141414", surface: "#1D1D1D", line: "#363636", ink: "#E8E8E8", muted: "#999999" },
+  sharpdark: { name: "High contrast dark", kind: "dark", canvas: "#000000", surface: "#000000", line: "#E0E0E0", ink: "#FFFFFF", muted: "#D0D0D0" },
 };
 
 // [colour on light themes, text on it] / [colour on dark themes, text on it]
@@ -23,6 +31,9 @@ export const ACCENTS: Record<string, { name: string; light: [string, string]; da
   pine: { name: "Pine", light: ["#1E7A4C", "#FFFFFF"], dark: ["#4CC28A", "#0B1F14"] },
   brick: { name: "Brick", light: ["#B23A2E", "#FFFFFF"], dark: ["#F07A6C", "#2A0D09"] },
   plum: { name: "Plum", light: ["#7A3E9D", "#FFFFFF"], dark: ["#C08BE0", "#1E0F28"] },
+  teal: { name: "Harbour teal", light: ["#0F766E", "#FFFFFF"], dark: ["#3CC7BA", "#04211E"] },
+  saffron: { name: "Saffron", light: ["#C2410C", "#FFFFFF"], dark: ["#FB8C4A", "#2A1104"] },
+  graphite: { name: "Graphite", light: ["#3B3F45", "#FFFFFF"], dark: ["#C9CED6", "#15181C"] },
 };
 
 // Roster status colours: [fill, text] for light and dark themes

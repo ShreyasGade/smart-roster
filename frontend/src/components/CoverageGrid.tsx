@@ -12,9 +12,9 @@ export default function CoverageGrid({ bps }: { bps: BrandProcess[] }) {
   return (
     <div className="overflow-x-auto border border-line">
       <table className="text-xs border-collapse">
-        <thead className="bg-surface">
+        <thead className="tint">
           <tr className="border-b border-line">
-            <th scope="col" className="text-left px-3 sticky left-0 bg-surface min-w-[170px] font-semibold">Brand and process</th>
+            <th scope="col" className="text-left px-3 sticky left-0 tint min-w-[170px] font-semibold">Brand and process</th>
             <DayHeader days={days} />
           </tr>
         </thead>

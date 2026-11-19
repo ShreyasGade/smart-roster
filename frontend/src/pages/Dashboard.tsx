@@ -36,7 +36,7 @@ export default function Dashboard() {
     <div className="space-y-5">
       <h1>{new Date(month + "-01T00:00:00").toLocaleString("en-IN", { month: "long", year: "numeric" })}</h1>
 
-      <dl className="flex flex-wrap panel">
+      <dl className="flex flex-wrap panel border-t-4 border-t-accent">
         <Figure label="Required shifts covered" value={`${s.coverage_pct}%`} note={`${s.covered_slots} of ${s.required_slots}`} />
         <Figure label="Must fix" value={s.hard} note="before publishing" alert={s.hard > 0} />
         <Figure label="Preference conflicts" value={s.soft} note="offs and comp-offs" />
@@ -125,7 +125,7 @@ function Figure({ label, value, note, alert, last }: { label: string; value: str
   return (
     <div className={`px-5 py-3 flex-1 min-w-[150px] ${last ? "" : "border-r border-line"}`}>
       <dt className="text-sm text-muted">{label}</dt>
-      <dd className={`text-3xl font-semibold leading-tight ${alert ? "text-danger" : ""}`} style={{ fontStretch: "115%" }}>{value}</dd>
+      <dd className={`text-3xl font-semibold leading-tight ${alert ? "text-danger" : "text-accent"}`} style={{ fontStretch: "115%" }}>{value}</dd>
       <dd className="text-xs text-muted">{note}</dd>
     </div>
   );
